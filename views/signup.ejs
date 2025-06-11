@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup Page</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+  <style>
+    :root {
+      --primary-color: #4EA685;
+      --secondary-color: #57B894;
+      --white: #ffffff;
+      --gray: #efefef;
+      --gray-dark: #757575;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .signup-container {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .signup-container h1 {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 0.8rem 2.5rem;
+      border: 1px solid var(--gray);
+      border-radius: 0.5rem;
+      outline: none;
+      font-size: 1rem;
+      background: var(--gray);
+    }
+
+    .input-group i {
+      position: absolute;
+      top: 50%;
+      left: 1rem;
+      transform: translateY(-50%);
+      color: var(--gray-dark);
+      font-size: 1.2rem;
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--primary-color);
+      color: var(--white);
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .signup-btn:hover {
+      background: var(--secondary-color);
+    }
+
+    .already-account {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+    }
+
+    .already-account a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .already-account a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h1>Signup</h1>
+    <!-- Signup form -->
+    <form action="/signup" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="input-group">
+        <i class='bx bxs-user'></i>
+        <input type="text" name="name" placeholder="Username" value="<%= name || '' %>" required>
+
+      </div>
+      <div class="input-group">
+        <i class='bx bxs-envelope'></i>
+        <input type="email" name="email" placeholder="Email" value="<%= email || '' %>" required>
+
+      </div>
+      <div class="input-group">
+        <i class='bx bxs-lock-alt'></i>
+        <input type="password" name="password" placeholder="Password" required>
+      </div>
+      <div class="input-group">
+        <i class='bx bxs-lock'></i>
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+      </div>
+      <button type="submit" class="signup-btn">Signup</button>
+    </form>
+    <p class="already-account">
+      Already have an account? <a href="/login">Login</a>
+    </p>
+    <script>
+      document.querySelector('form').addEventListener('submit', function(event) {
+        const name = document.querySelector('input[name="name"]').value;
+        const email = document.querySelector('input[name="email"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+        const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+
+        // Validate name
+        if (name.trim() === '') {
+          alert('Name is required.');
+          event.preventDefault();
+          return;
+        }
+
+        // Validate email format
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          alert('Please enter a valid email address.');
+          event.preventDefault();
+          return;
+        }
+
+        // Validate password length
+        if (password.length < 6) {
+          alert('Password must be at least 6 characters long.');
+          event.preventDefault();
+          return;
+        }
+
+        // Validate password match
+        if (password !== confirmPassword) {
+          alert('Passwords do not match.');
+          event.preventDefault();
+          return;
+        }
+      });
+    </script>
+
+  </div>
+</body>
+</html>

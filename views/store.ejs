@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD Operations with Table</title>
+  <style>
+    /* General reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #495057;
+    }
+
+    form {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+      color: #495057;
+    }
+
+    form input, form button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+      color: #495057;
+    }
+
+    form button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #0056b3;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+    .deletes{
+        color: red;
+      font-size: 14px;
+    }
+
+    .table-container {
+      margin-top: 40px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      form {
+        padding: 15px;
+      }
+
+      form input, form button {
+        width: 100%;
+        padding: 12px;
+      }
+
+      table th, table td {
+        padding: 10px;
+      }
+
+      table {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      form input, form button {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      table th, table td {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      .table-container {
+        overflow-x: scroll;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <h1>Luggage Management CRUD</h1>
+  
+  <form>
+    <div id="message"></div>
+
+    <label for="luggageId">Luggage ID:</label>
+    <input type="text" id="luggageId" placeholder="Enter luggage ID" />
+    <br />
+    <label class="names error"></label>
+    <br/>
+
+    <label for="userName">User Name:</label>
+    <input type="text" id="userName" placeholder="Enter user name" />
+    <br />
+    <label class="checkins error"></label>
+    <br/>
+    
+    <label for="checkInTime">Check-In Time:</label>
+    <input type="datetime-local" id="checkInTime" />
+    <br />
+    <label class="checkouts error"></label>
+    <br/>
+
+    <label for="checkOutTime">Check-Out Time:</label>
+    <input type="datetime-local" id="checkOutTime" />
+    <br />
+    <label class="prices error"></label>
+    <br/>
+    
+    <label for="price">Price:</label>
+    <input type="number" id="price" placeholder="Enter price" />
+    <br />
+    <label class="locations error"></label>
+    <br/>
+    
+    <label for="deliveryOption">Delivery Option:</label>
+    <input type="checkbox" id="deliveryOption" />
+    <br />
+    
+    <label for="deliveryAddress">Delivery Address:</label>
+    <input type="text" id="deliveryAddress" placeholder="Enter delivery address" />
+    <br />
+    
+    <label for="pickupOption">Pickup Option:</label>
+    <input type="checkbox" id="pickupOption" />
+    <br />
+    
+    <label for="pickupLocation">Pickup Location:</label>
+    <input type="text" id="pickupLocation" placeholder="Enter pickup location" />
+    <br />
+    
+    <label for="location">Location:</label>
+    <input type="text" id="location" placeholder="Enter location" />
+
+    <br />
+
+    <!-- Payment Status checkbox -->
+    <label for="paymentStatus">Payment Completed:</label>
+    <input type="checkbox" id="paymentStatus" />
+    <br />
+    <label class="deletes"></label>
+    <br />
+    
+    <button type="button" id="add">Add</button>
+    <button type="button" id="update">Update</button>
+    <button type="button" id="delete">Delete</button>
+  </form>
+
+  <h2>Details Table:</h2>
+  <div class="table-container">
+    <table id="detailsTable">
+      <thead>
+        <tr>
+          <th>Luggage ID</th>
+          <th>User Name</th>
+          <th>Check-In Time</th>
+          <th>Check-Out Time</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+<script>
+  const luggageIdInput = document.getElementById('luggageId');
+  const userNameInput = document.getElementById('userName');
+  const checkInTimeInput = document.getElementById('checkInTime');
+  const checkOutTimeInput = document.getElementById('checkOutTime');
+  const priceInput = document.getElementById('price');
+  const locationInput = document.getElementById('location');
+  const paymentStatusInput = document.getElementById('paymentStatus'); // Payment checkbox
+  
+  const addButton = document.getElementById('add');
+  const updateButton = document.getElementById('update');
+  const deleteButton = document.getElementById('delete');
+  const detailsTable = document.getElementById('detailsTable').querySelector('tbody');
+ const deletes=document.getElementsByClassName('.deletes')
+  const messageDiv = document.getElementById('message');
+  
+  const errorMessages = {
+    luggageId: document.querySelector('.names'),
+    userName: document.querySelector('.checkins'),
+    checkInTime: document.querySelector('.checkouts'),
+    price: document.querySelector('.prices'),
+    location: document.querySelector('.locations'),
+   deletes:document.querySelector('.deletes')
+  };
+
+  let selectedRow = null;
+
+  function validateFields() {
+    let isValid = true;
+
+    Object.values(errorMessages).forEach((errorDiv) => (errorDiv.textContent = ''));
+
+    if (!luggageIdInput.value.trim()) {
+      errorMessages.luggageId.textContent = 'Luggage ID is required.';
+      isValid = false;
+    }
+
+    if (!userNameInput.value.trim()) {
+      errorMessages.userName.textContent = 'User Name is required.';
+      isValid = false;
+    }
+
+    if (!checkInTimeInput.value.trim()) {
+      errorMessages.checkInTime.textContent = 'Check-In Time is required.';
+      isValid = false;
+    }
+
+    if (!priceInput.value.trim()) {
+      errorMessages.price.textContent = 'Price is required.';
+      isValid = false;
+    }
+
+    if (!locationInput.value.trim()) {
+      errorMessages.location.textContent = 'Location is required.';
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  function clearInputs() {
+    luggageIdInput.value = '';
+    userNameInput.value = '';
+    checkInTimeInput.value = '';
+    checkOutTimeInput.value = '';
+    priceInput.value = '';
+    locationInput.value = '';
+    paymentStatusInput.checked = false;
+    
+    Object.values(errorMessages).forEach((errorDiv) => (errorDiv.textContent = ''));
+  }
+
+  // Add operation
+  addButton.onclick = function () {
+    if (!validateFields()) return;
+
+    const status = checkOutTimeInput.value ? 'Checked Out' : 'Checked In';
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${luggageIdInput.value.trim()}</td>
+      <td>${userNameInput.value.trim()}</td>
+      <td>${checkInTimeInput.value.trim()}</td>
+      <td>${checkOutTimeInput.value.trim() || 'N/A'}</td>
+      <td>${priceInput.value.trim()}</td>
+      <td>${status}</td>
+      <td>${locationInput.value.trim()}</td>
+    `;
+    row.onclick = () => selectRow(row);
+    detailsTable.appendChild(row);
+    clearInputs();
+  };
+
+  // Update operation
+  updateButton.onclick = function () {
+    if (!selectedRow) {
+      messageDiv.textContent = 'Please select a row to update!';
+      return;
+    }
+
+    if (!validateFields()) return;
+
+    const status = checkOutTimeInput.value ? 'Checked Out' : 'Checked In';
+
+    selectedRow.cells[0].textContent = luggageIdInput.value.trim();
+    selectedRow.cells[1].textContent = userNameInput.value.trim();
+    selectedRow.cells[2].textContent = checkInTimeInput.value.trim();
+    selectedRow.cells[3].textContent = checkOutTimeInput.value.trim() || 'N/A';
+    selectedRow.cells[4].textContent = priceInput.value.trim();
+    selectedRow.cells[5].textContent = status;
+    selectedRow.cells[6].textContent = locationInput.value.trim();
+
+    clearInputs();
+    selectedRow = null;
+    messageDiv.textContent = '';
+  };
+
+  // Delete operation with payment check
+  deleteButton.onclick = function () {
+    if (!selectedRow) {
+      deletes.textContent = 'Please select a row to delete!';
+      return;
+    }
+
+    if (!paymentStatusInput.checked) {
+      deletes.textContent = 'Payment must be completed before deletion.';
+      return;
+    }
+
+    selectedRow.remove();
+    clearInputs();
+    selectedRow = null;
+    messageDiv.textContent = '';
+  };
+
+  function selectRow(row) {
+    if (selectedRow) {
+      selectedRow.style.backgroundColor = '';
+    }
+
+    selectedRow = row;
+    row.style.backgroundColor = '#dfe3e6';
+
+    luggageIdInput.value = row.cells[0].textContent;
+    userNameInput.value = row.cells[1].textContent;
+    checkInTimeInput.value = row.cells[2].textContent;
+    checkOutTimeInput.value = row.cells[3].textContent === 'N/A' ? '' : row.cells[3].textContent;
+    priceInput.value = row.cells[4].textContent;
+    locationInput.value = row.cells[6].textContent;
+  }
+</script>
+
+</body>
+</html>

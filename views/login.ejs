@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+  <style>
+    :root {
+      --primary-color: #4EA685;
+      --secondary-color: #57B894;
+      --white: #ffffff;
+      --gray: #efefef;
+      --gray-dark: #757575;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .login-container {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login-container h1 {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 0.8rem 2.5rem;
+      border: 1px solid var(--gray);
+      border-radius: 0.5rem;
+      outline: none;
+      font-size: 1rem;
+      background: var(--gray);
+    }
+
+    .input-group i {
+      position: absolute;
+      top: 50%;
+      left: 1rem;
+      transform: translateY(-50%);
+      color: var(--gray-dark);
+      font-size: 1.2rem;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--primary-color);
+      color: var(--white);
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background: var(--secondary-color);
+    }
+
+    .forgot-password {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+    }
+
+    .forgot-password a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+    .already-account {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+    }
+
+    .already-account a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .already-account a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelector('form').addEventListener('submit', function(event) {
+        const email = document.querySelector('input[name="email"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+
+        // Validate email format
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          alert('Please enter a valid email address.');
+          event.preventDefault();
+          return;
+        }
+
+        // Validate password length
+        if (password.length < 6) {
+          alert('Password must be at least 6 characters long.');
+          event.preventDefault();
+          return;
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <!-- Updated form with POST method and action -->
+    <form action="/login" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="input-group">
+        <i class='bx bxs-user'></i>
+        <input type="email" name="email" placeholder="Email" value="<%= email || '' %>" required>
+      </div>
+      <div class="input-group">
+        <i class='bx bxs-lock-alt'></i>
+        <input type="password" name="password" placeholder="Password" required>
+      </div>
+      <button type="submit" class="login-btn">Login</button>
+      <br/>
+      <label class="message">
+
+      </label>
+    </form>
+    <p class="forgot-password">
+      <a href="/forgot-password">Forgot Password?</a>
+    </p>
+    <p class="already-account">
+      Don't have an account? <a href="/signup">signup</a>
+    </p>
+  </div>    
+</body>
+</html>

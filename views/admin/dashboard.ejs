@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Luggage Management System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: #343a40;
+        }
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.75);
+        }
+        .sidebar .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .stat-card {
+            border-left: 4px solid #0d6efd;
+            transition: transform 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="p-3 text-white">
+                    <h4 class="mb-4">Luggage System</h4>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#dashboard" data-bs-toggle="tab">
+                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#users" data-bs-toggle="tab">
+                                <i class="fas fa-users me-2"></i>Users
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#luggage" data-bs-toggle="tab">
+                                <i class="fas fa-suitcase me-2"></i>Luggage
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#reports" data-bs-toggle="tab">
+                                <i class="fas fa-chart-bar me-2"></i>Reports
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#settings" data-bs-toggle="tab">
+                                <i class="fas fa-cog me-2"></i>Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 ms-sm-auto px-4 py-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Admin Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-download me-1"></i> Export
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-print me-1"></i> Print
+                            </button>
+                        </div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="fas fa-plus me-1"></i> Add New
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                      <i class="fas fa-user-plus me-1"></i> Add User
+                    </a></li>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#checkInModal">
+                      <i class="fas fa-suitcase me-1"></i> Check-in Luggage
+                    </a></li>
+                  </ul>
+                </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted">Total Users</h5>
+                                <h2 class="mb-0"><%= users.length %></h2>
+                                <p class="text-success small mt-1">
+                                    <i class="fas fa-arrow-up"></i> 12% from last month
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted">Luggage Entries</h5>
+                                <h2 class="mb-0"><%= luggageEntries.length %></h2>
+                                <p class="text-success small mt-1">
+                                    <i class="fas fa-arrow-up"></i> 8% from last month
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted">Pending</h5>
+                                <h2 class="mb-0"><%= luggageEntries.filter(e => e.status === 'pending').length %></h2>
+                                <p class="text-danger small mt-1">
+                                    <i class="fas fa-arrow-down"></i> 3% from last month
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card stat-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted">Delivered</h5>
+                                <h2 class="mb-0"><%= luggageEntries.filter(e => e.status === 'delivered').length %></h2>
+                                <p class="text-success small mt-1">
+                                    <i class="fas fa-arrow-up"></i> 15% from last month
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Dashboard Tab -->
+                    <div class="tab-pane fade show active" id="dashboard">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5>Recent Activity</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Action</th>
+                                                <th>User</th>
+                                                <th>Time</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>#12345</td>
+                                                <td>Luggage Check-in</td>
+                                                <td>john.doe@example.com</td>
+                                                <td>10 mins ago</td>
+                                                <td><span class="badge bg-success">Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>#12344</td>
+                                                <td>New User Registration</td>
+                                                <td>jane.smith@example.com</td>
+                                                <td>25 mins ago</td>
+                                                <td><span class="badge bg-success">Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>#12343</td>
+                                                <td>Luggage Delivery</td>
+                                                <td>mike.jones@example.com</td>
+                                                <td>1 hour ago</td>
+                                                <td><span class="badge bg-warning">Pending</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Users Tab -->
+                    <div class="tab-pane fade" id="users">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5>User Management</h5>
+                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                                    <i class="fas fa-plus me-1"></i> Add User
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Last Login</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% users.forEach(user => { %>
+                                            <tr>
+                                                <td><%= user.id %></td>
+                                                <td><%= user.name %></td>
+                                                <td><%= user.email %></td>
+                                                <td>
+                                                  <% if(user.role === 'admin') { %>
+                                                    <span class="badge bg-danger">Admin</span>
+                                                  <% } else { %>
+                                                    <span class="badge bg-info">User</span>
+                                                  <% } %>
+                                                </td>
+                                                <td>2 hours ago</td>
+                                                <td>
+                                                    <% if(user.role === 'admin') { %>
+                                                      <button class="btn btn-sm btn-outline-warning me-1 demote-btn" 
+                                                              data-user-id="<%= user.id %>">
+                                                        <i class="fas fa-user-minus"></i> Demote
+                                                      </button>
+                                                    <% } else { %>
+                                                      <button class="btn btn-sm btn-outline-success me-1 promote-btn" 
+                                                              data-user-id="<%= user.id %>">
+                                                        <i class="fas fa-user-plus"></i> Promote
+                                                      </button>
+                                                    <% } %>
+                                                    <button class="btn btn-sm btn-outline-danger delete-btn" 
+                                                            data-user-id="<%= user.id %>">
+                                                      <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Luggage Tab -->
+                    <div class="tab-pane fade" id="luggage">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Luggage Entries</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Entry ID</th>
+                                                <th>User ID</th>
+                                                <th>Luggage Number</th>
+                                                <th>Status</th>
+                                                <th>Check-in Time</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% luggageEntries.forEach(entry => { %>
+                                            <tr>
+                                                <td><%= entry.id %></td>
+                                                <td><%= entry.userId %></td>
+                                                <td><%= entry.luggageNumber %></td>
+                                                <td>
+                                                    <% if(entry.status === 'delivered') { %>
+                                                        <span class="badge bg-success">Delivered</span>
+                                                    <% } else if(entry.status === 'pending') { %>
+                                                        <span class="badge bg-warning">Pending</span>
+                                                    <% } else { %>
+                                                        <span class="badge bg-secondary"><%= entry.status %></span>
+                                                    <% } %>
+                                                </td>
+                                                <td><%= new Date(entry.createdAt).toLocaleString() %></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary me-1">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-success me-1">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reports Tab -->
+                    <div class="tab-pane fade" id="reports">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>System Reports</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                <h6>Luggage Status Distribution</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <canvas id="statusChart" height="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                <h6>Monthly Activity</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <canvas id="activityChart" height="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6>Generate Custom Report</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Report Type</label>
+                                                    <select class="form-select">
+                                                        <option>User Activity</option>
+                                                        <option>Luggage Status</option>
+                                                        <option>System Logs</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">From Date</label>
+                                                    <input type="date" class="form-control">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">To Date</label>
+                                                    <input type="date" class="form-control">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-file-pdf me-1"></i> Generate Report
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div class="tab-pane fade" id="settings">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>System Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label class="form-label">System Name</label>
+                                        <input type="text" class="form-control" value="Luggage Management System">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Timezone</label>
+                                        <select class="form-select">
+                                            <option>(UTC+00:00) London</option>
+                                            <option>(UTC+01:00) Paris</option>
+                                            <option selected>(UTC+05:30) Mumbai</option>
+                                            <option>(UTC-05:00) New York</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email Notifications</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                            <label class="form-check-label" for="emailNotifications">Enable email notifications</label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">System Maintenance</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="maintenanceMode">
+                                            <label class="form-check-label" for="maintenanceMode">Enable maintenance mode</label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Check-in Modal -->
+    <div class="modal fade" id="checkInModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Luggage Check-in</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="checkInForm">
+                        <div class="mb-3">
+                            <label class="form-label">User ID</label>
+                            <input type="text" class="form-control" name="userId" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Luggage Number</label>
+                            <input type="text" class="form-control" name="luggageNumber" required>
+                        </div>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="checkInSubmit">Check-in</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Role</label>
+                            <select class="form-select" name="role">
+                                <option>Admin</option>
+                                <option selected>Staff</option>
+                                <option>User</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="addUserSubmit">Add User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Scripts -->
+    <script>
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Status Chart
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            const statusChart = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Delivered', 'Pending', 'In Transit', 'Lost'],
+                    datasets: [{
+                        data: [65, 15, 15, 5],
+                        backgroundColor: [
+                            '#28a745',
+                            '#ffc107',
+                            '#17a2b8',
+                            '#dc3545'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Activity Chart
+            const activityCtx = document.getElementById('activityChart').getContext('2d');
+            const activityChart = new Chart(activityCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Check-ins',
+                        data: [120, 190, 170, 220, 180, 250],
+                        backgroundColor: '#007bff'
+                    }, {
+                        label: 'Deliveries',
+                        data: [80, 150, 140, 190, 160, 210],
+                        backgroundColor: '#28a745'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+    <!-- Check-in Script -->
+    <script>
+      document.getElementById('checkInSubmit').addEventListener('click', async function() {
+        const form = document.getElementById('checkInForm');
+        const formData = new FormData(form);
+        
+        try {
+          const response = await fetch('/admin/check-in', {
+            method: 'POST',
+            body: JSON.stringify(Object.fromEntries(formData)),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          const result = await response.json();
+          if (result.success) {
+            alert('Luggage checked in successfully!');
+            location.reload();
+          } else {
+            alert(result.message || 'Check-in failed');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred during check-in');
+        }
+      });
+    </script>
+
+    <!-- User Management Script -->
+    <script>
+      // Handle promote/demote actions and add user form
+      document.addEventListener('DOMContentLoaded', function() {
+        // Add User Form Submission
+        document.getElementById('addUserSubmit').addEventListener('click', async function() {
+          const form = document.getElementById('addUserForm');
+          const formData = new FormData(form);
+          
+          try {
+            const response = await fetch('/admin/add-user', {
+              method: 'POST',
+              body: JSON.stringify(Object.fromEntries(formData)),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            
+            const result = await response.json();
+            if (result.success) {
+              alert('User added successfully!');
+              location.reload();
+            } else {
+              alert(result.message || 'Failed to add user');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while adding user');
+          }
+        });
+
+        // Handle promote/demote actions
+        document.addEventListener('click', function(e) {
+          if (e.target.closest('.promote-btn')) {
+            const btn = e.target.closest('.promote-btn');
+            handleRoleChange(btn, 'promote');
+          } else if (e.target.closest('.demote-btn')) {
+            const btn = e.target.closest('.demote-btn');
+            handleRoleChange(btn, 'demote');
+          }
+        });
+
+        async function handleRoleChange(btn, action) {
+          const userId = btn.dataset.userId;
+          const confirmMessage = action === 'promote' 
+            ? 'Are you sure you want to promote this user to admin?'
+            : 'Are you sure you want to demote this admin to regular user?';
+          
+          if (!confirm(confirmMessage)) return;
+
+          try {
+            const response = await fetch(`/admin/${action}/${userId}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': '<%= csrfToken %>'
+              }
+            });
+            
+            const result = await response.json();
+            if (result.success) {
+              location.reload();
+            } else {
+              alert(result.message || 'Action failed');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while processing your request');
+          }
+        }
+      });
+    </script>
+</body>
+</html>

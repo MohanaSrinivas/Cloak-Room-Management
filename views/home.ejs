@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Advanced cloakroom management system with secure and efficient storage solutions.">
+    <title>Advanced Cloakroom Management</title>
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    img {
+        width: 100%; /* Make images responsive */
+        height: auto; /* Maintain aspect ratio */
+      }
+      
+      
+      
+      footer {
+        background-color: #333; /* Dark background for footer */
+        color: white; /* White text color for contrast */
+        text-align: center; /* Centered text */
+        padding: 20px 0; /* Padding for spacing */
+        margin-top: 20px; /* Space above the footer */
+      }
+      
+      .menu-links a {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      
+      
+      .hero {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: linear-gradient(to right, #0078d4, #00c6ff);
+        color: white;
+        text-align: center;
+      }
+      
+      .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        animation: fadeIn 2s ease-in-out;
+      }
+      
+      .btn.primary {
+        padding: 10px 20px;
+        border: none;
+        background-color: white;
+        color: #0078d4;
+        cursor: pointer;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+      }
+      
+      .btn.primary:hover {
+        transform: scale(1.1);
+        background-color: #00c6ff;
+      }
+      
+      .features {
+        padding: 80px 20px;
+        background-color: #f8f9fa;
+      }
+      
+      .features .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .features h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #0078d4;
+      }
+      
+      .section-subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 60px;
+        font-size: 1.1rem;
+      }
+      
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+      
+      .feature-card {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: #0078d4;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+      }
+      
+      .feature-icon i {
+        color: white;
+        font-size: 24px;
+      }
+      
+      .feature-card h3 {
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #333;
+      }
+      
+      .feature-card p {
+        text-align: center;
+        color: #666;
+        line-height: 1.6;
+      }
+      
+      @media (max-width: 768px) {
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .feature-card {
+          padding: 20px;
+        }
+      }
+      
+      /* Navbar Styles */
+      .navbar {
+        background-color: rgba(0, 0, 0, 0.9);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        padding: 15px 0;
+      }
+      
+      .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+      }
+      
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 20px;
+      }
+      
+      .nav-link {
+        text-decoration: none;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      
+      .nav-link:hover,
+      .nav-link.active {
+        color: #00c6ff;
+      }
+      
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background: #00c6ff;
+        bottom: 0;
+        left: 0;
+        transition: width 0.3s;
+      }
+      
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 100%;
+      }
+      
+      .mobile-menu {
+        display: none;
+        cursor: pointer;
+      }
+      
+      .mobile-menu i {
+        font-size: 24px;
+        color: white;
+      }
+      .dropdown {
+        position: relative;
+      }
+      
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        color: black;
+        min-width: 120px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+      
+      .dropdown-content a {
+        padding: 10px 15px;
+        text-decoration: none;
+        display: block;
+        color: #0078d4;
+        
+      }
+      
+      .dropdown-content a:hover {
+        background-color: rgba(0, 120, 212, 0.1);
+      }
+      
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+      
+      .navbar.scrolled {
+        background-color: rgba(0, 0, 0, 0.95);
+        transition: background-color 0.3s ease-in-out;
+      }
+      .dropbtn{
+        text-decoration: none;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      
+      
+      /* Mobile Styles */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 60px;
+          left: 0;
+          width: 100%;
+          background-color: rgba(0, 0, 0, 0.9);
+          padding: 20px 0;
+        }
+      
+        .nav-links.active {
+          display: flex;
+        }
+      
+        .mobile-menu {
+          display: block;
+        }
+      }
+      
+      /* Luggage Section Styles */
+      .luggage {
+        padding: 50px 20px;
+        background-color: white;
+        text-align: center;
+      }
+      
+      .luggage h2 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        color: #0078d4;
+      }
+      
+      .luggage-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .luggage-card {
+        background: white;
+        padding: 40px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .luggage-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      .luggage-card i {
+        font-size: 3rem;
+        color: #0078d4;
+        margin-bottom: 20px;
+      }
+      
+      .luggage-card h3 {
+        font-size: 1.8rem;
+        color: #333;
+        margin-bottom: 15px;
+      }
+      
+      .luggage-card p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 25px;
+      }
+      
+      .luggage-card .btn {
+        margin-top: 15px;
+      }
+      
+      /* Tourism Locations Section Styles */
+      .locations {
+        padding: 50px 20px;
+        background-color: #f8f9fa;
+      }
+      
+      .locations h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        color: #0078d4;
+      }
+      
+      .location-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .location-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .location-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      .location-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+      
+      .location-card h3 {
+        font-size: 1.5rem;
+        color: #0078d4;
+        margin: 15px 20px 10px;
+      }
+      
+      .location-card p {
+        font-size: 1rem;
+        color: #555;
+        margin: 0 20px 20px;
+        line-height: 1.5;
+      }
+      
+      @media (max-width: 768px) {
+        .location-grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+        }
+      }
+      
+      /* About Section Styles */
+      .about {
+        padding: 50px;
+        background-color: #ffffff;
+        text-align: center;
+      }
+      
+      .about h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #0078d4;
+      }
+      
+      .about p {
+        font-size: 1.1rem;
+        color: #555;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+      
+      /* Services Section Styles */
+      .services {
+        padding: 50px;
+        background-color: #f4f4f4;
+        text-align: center;
+      }
+      
+      .services h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #0078d4;
+      }
+      
+      .service-cards {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+      
+      .service-card {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 280px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+      }
+      
+      .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      }
+      
+      .service-card i {
+        font-size: 3rem;
+        color: #0078d4;
+        margin-bottom: 20px;
+      }
+      
+      .service-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #333;
+      }
+      
+      .service-card p {
+        font-size: 1rem;
+        color: #555;
+      }
+      
+      /* Contact Section Styling */
+      .contact {
+        padding: 50px 20px;
+        background-color: #f4f4f4;
+      }
+      
+      .contact .container {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      
+      
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .contact-item i {
+        font-size: 1.5rem;
+        color: #0078d4;
+      }
+      
+      .contact-item p {
+        font-size: 1rem;
+      }
+      
+      .contact-item span {
+        font-weight: bold;
+      }
+      
+      .contact-form-map {
+        display: flex;
+        gap: 30px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      
+      .contact-form {
+        flex: 1;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      .contact-form h3 {
+        font-size: 1.8rem;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      
+      .contact-form input,
+      .contact-form textarea {
+        width: 100%;
+        padding: 15px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+      
+      .contact-form button {
+        padding: 10px 20px;
+        background-color: #0078d4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      
+      .contact-form button:hover {
+        background-color: #005bb5;
+      }
+      
+      /* Google Map Styling */
+      .map-container {
+        flex: 1;
+        max-width: 600px;
+        height: 450px;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      
+      @media screen and (max-width: 768px) {
+        .contact .container {
+          flex-direction: column;
+          align-items: center;
+        }
+      
+        .contact-form-map {
+          flex-direction: column;
+        }
+      
+        .contact-form,
+        .map-container {
+          width: 100%;
+        }
+      
+        .map-container iframe {
+          height: 300px;
+        }
+      }
+      /* Additional Information Section */
+      .additional-info {
+        padding: 50px 20px;
+        background-color: #f4f4f4;
+      }
+      
+      .additional-info .container {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .menu-links, .social-media {
+        flex: 1;
+        padding: 30px;
+        border-radius: 8px;
+      }
+      
+      .menu-links h3, .social-media h3 {
+        font-size: 1.8rem;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      
+      .menu-links ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .menu-links li {
+        margin-bottom: 10px;
+      }
+      
+      .menu-links a {
+        text-decoration: none;
+        font-size: 1.1rem;
+        color: #0078d4;
+        transition: color 0.3s;
+      }
+      
+      .menu-links a:hover {
+        color: #005bb5;
+      }
+      
+      .social-icons {
+        display: flex;
+        gap: 15px;
+      }
+      
+      .social-icon {
+        font-size: 2rem;
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      
+      .social-icon:hover {
+        color: #0078d4;
+      }
+      
+      @media screen and (max-width: 768px) {
+        .additional-info .container {
+          flex-direction: column;
+          align-items: center;
+        }
+      
+        .menu-links, .social-media {
+          width: 100%;
+          margin-bottom: 20px;
+        }
+      }
+      
+      @media screen and (max-width: 768px) {
+        .location-map {
+          flex-direction: column;
+          align-items: center;
+        }
+      
+        .map-container iframe {
+          width: 100%;
+          height: 300px;
+        }
+      }
+      
+      
+      /* Responsive Styles for About, Services, and Contact */
+      @media screen and (max-width: 768px) {
+        .service-cards {
+          flex-direction: column;
+          align-items: center;
+        }
+      
+        .service-card {
+          width: 90%;
+          margin-bottom: 20px;
+        }
+      
+        .contact form {
+          width: 100%;
+        }
+      }
+      
+      /* Pricing Section Styles */
+      .pricing {
+        padding: 50px;
+        background-color: #f4f4f4;
+        text-align: center;
+      }
+      
+      .pricing h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #0078d4;
+      }
+      
+      .pricing .pricing-cards {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+      
+      .pricing-card {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 280px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+      }
+      
+      .pricing-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      }
+      
+      .pricing-card h3 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: #333;
+      }
+      
+      .pricing-card p {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 30px;
+      }
+      
+      .pricing-card .price {
+        font-size: 2.5rem;
+        color: #0078d4;
+        margin-bottom: 15px;
+      }
+      
+      .pricing-card button {
+        padding: 10px 20px;
+        background-color: #0078d4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      .pricing-card button:hover {
+        background-color: #00c6ff;
+      }
+      
+      
+      /* Responsive Styles for Pricing Section */
+      @media screen and (max-width: 768px) {
+        .pricing .pricing-cards {
+          flex-direction: column;
+          align-items: center;
+        }
+      
+        .pricing-card {
+          width: 90%;
+          margin-bottom: 20px;
+        }
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      .contacts{
+        margin-top: 20px;
+        text-align: center;
+        font-size: 2.5rem;
+        color: #0078d4;
+      }
+      
+      
+    /* AI Chat Assistant Styles */
+    .chat-container {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+    }
+    
+    .chat-button {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #0078d4;
+        color: white;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    
+    .chat-button:hover {
+        background-color: #00c6ff;
+        transform: scale(1.1);
+    }
+    
+    .chat-modal {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 350px;
+        height: 500px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    
+    .chat-header {
+        background: #0078d4;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .chat-header h3 {
+        margin: 0;
+        font-size: 18px;
+    }
+    
+    .close-chat {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+    }
+    
+    .chat-input {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #eee;
+    }
+    
+    .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        outline: none;
+    }
+    
+    .chat-input button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #0078d4;
+        color: white;
+        border: none;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    
+    .chat-input button:hover {
+        background: #00c6ff;
+    }
+    
+    @media (max-width: 768px) {
+        .chat-modal {
+            width: 300px;
+            right: 10px;
+        }
+    }
+    /* Add this to your existing CSS */
+.message {
+  margin: 10px;
+  padding: 10px 15px;
+  border-radius: 18px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.message.user {
+  background-color: #0078d4;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 5px;
+}
+
+.message.bot {
+  background-color: #f1f1f1;
+  color: #333;
+  margin-right: auto;
+  border-bottom-left-radius: 5px;
+}
+
+.message-time {
+  font-size: 0.7rem;
+  color: #999;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.typing .typing-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #666;
+  margin: 0 2px;
+  animation: typingAnimation 1.4s infinite ease-in-out;
+}
+
+.typing .typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing .typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingAnimation {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-5px); }
+}
+</style>
+</head>
+<body>
+    
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="#" class="logo">CloakroomPro</a>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Account</a>
+                        <div class="dropdown-content">
+                            <% if (user) { %>
+                                <a href="/profile">Profile</a>
+                                <a href="/logout">Logout</a>
+                            <% } else { %>
+                                <a href="/signup">Signup</a>
+                                <a href="/login">Login</a>
+                            <% } %>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <img src="crimg3.jpg" alt="Cloakroom Image" width="100%">
+                <h1 class="animate-text">Manage Your Cloakroom <span>Effortlessly</span></h1>
+                <p>Advanced storage solutions for modern needs.</p>
+                <button class="btn primary" onclick="scrollToSection('features')">Explore Features</button>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Key Features</h2>
+                <p class="section-subtitle">Experience seamless cloakroom management with our advanced features</p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Advanced Security</h3>
+                        <p>24/7 monitoring and secure storage with individual lockers</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <h3>QR Code Tracking</h3>
+                        <p>Instant item tracking and retrieval using QR codes</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Mobile Integration</h3>
+                        <p>Manage your items through our mobile app</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>24/7 Access</h3>
+                        <p>Round-the-clock access to your stored items</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3>Real-time Alerts</h3>
+                        <p>Instant notifications for all transactions</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Usage Analytics</h3>
+                        <p>Track and analyze your storage patterns</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!-- Luggage Section -->
+<section id="luggage" class="luggage">
+    <h2>Luggage Services</h2>
+    <div class="luggage-grid">
+      <div class="luggage-card">
+        <i class="fas fa-suitcase"></i>
+        <h3>Check-In</h3>
+        <p>Securely store your luggage with our advanced tracking system</p>
+        <button class="btn primary" id="getLocationBtn">Get Current Location</button>
+        <input type="hidden" id="currentLocation" name="currentLocation" value="">
+        <button class="btn primary"><a href="/store">Check-In Now</a></button>
+      </div>
+      <div class="luggage-card">
+        <i class="fas fa-suitcase-rolling"></i>
+        <h3>Check-Out</h3>
+        <p>Quick and easy luggage retrieval with QR code verification</p>
+        <button class="btn primary"><a href="/store">Check-Out Now</a></button>
+      </div>
+      <div class="luggage-card">
+        <i class="fas fa-truck"></i>
+        <h3>Track Delivery</h3>
+        <p>Track your luggage delivery in real-time</p>
+        <button class="btn primary" id="trackDeliveryBtn">Track Delivery</button>
+        <div id="deliveryStatus" style="margin-top: 10px; font-weight: bold; color: #0078d4;">
+          <!-- Delivery status will be displayed here -->
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+
+<!-- About Section -->
+<section id="about" class="about">
+  
+  <h2>About Us</h2>
+  <img src="ship-to-storage.webp">
+  <p>We provide advanced cloakroom management solutions, offering seamless and secure storage for your belongings with a modern approach to convenience and efficiency.</p>
+</section>
+
+<!-- Tourism Locations Section -->
+<section id="locations" class="locations">
+  <h2>Popular Tourist Destinations</h2>
+  <div class="location-grid">
+    <div class="location-card">
+      <img src="hyderabad.jpg" alt="Hyderabad">
+      <h3>Hyderabad</h3>
+      <p>City of Pearls, known for its rich history and delicious biryani.</p>
+    </div>
+    <div class="location-card">
+      <img src="delhi.jpg" alt="Delhi">
+      <h3>Delhi</h3>
+      <p>India's capital, blending ancient history with modern development.</p>
+    </div>
+    <div class="location-card">
+      <img src="manali.jpg" alt="Manali">
+      <h3>Manali</h3>
+      <p>Scenic hill station in the Himalayas, perfect for adventure sports.</p>
+    </div>
+    <div class="location-card">
+      <img src="munnar.jpg" alt="Munnar">
+      <h3>Munnar</h3>
+      <p>Beautiful tea plantations and misty hills in Kerala.</p>
+    </div>
+    <div class="location-card">
+      <img src="araku.jpg" alt="Araku">
+      <h3>Araku</h3>
+      <p>Picturesque valley known for its coffee plantations and tribal culture.</p>
+    </div>
+    <div class="location-card">
+      <img src="agra.jpg" alt="Agra">
+      <h3>Agra</h3>
+      <p>Home to the iconic Taj Mahal, a UNESCO World Heritage Site.</p>
+    </div>
+    <div class="location-card">
+      <img src="kerala.jpg" alt="Kerala">
+      <h3>Kerala</h3>
+      <p>God's Own Country, famous for backwaters and lush greenery.</p>
+    </div>
+    <div class="location-card">
+      <img src="shiridi.jpg" alt="Shiridi">
+      <h3>Shiridi</h3>
+      <p>Spiritual destination known for the Sai Baba temple.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Services Section -->
+<section id="services" class="services">
+  <h2>Our Services</h2>
+  <div class="service-cards">
+      <div class="service-card">
+          <i class="fas fa-lock"></i>
+          <h3>Secure Storage</h3>
+          <p>We prioritize security, ensuring your belongings are safe at all times.</p>
+      </div>
+      <div class="service-card">
+          <i class="fas fa-search"></i>
+          <h3>Easy Search</h3>
+          <p>Our search system helps you locate stored items quickly and easily.</p>
+      </div>
+      <div class="service-card">
+          <i class="fas fa-truck"></i>
+          <h3>Fast Service</h3>
+          <p>Enjoy efficient and quick service for your cloakroom needs.</p>
+      </div>
+  </div>
+</section>
+<!-- Pricing Section -->
+<section id="pricing" class="pricing">
+   
+  <h2>Pricing</h2>
+  <div class="pricing-cards">
+      <div class="pricing-card">
+          <h3 name="hourly_rate">Hourly Rate</h3>
+          <p>Simple and transparent pricing per bag</p>
+          <div class="price" name="price">₹20/bag/hour</div>
+          <button class="btn primary"><a href="/store">Store Now</a></button>
+      </div>
+      <div class="pricing-card">
+          <h3>Daily Rate</h3>
+          <p>Best for extended storage needs</p>
+          <div class="price">₹150/bag/day</div>
+          <button class="btn primary"><a href="/store">Store Now</a></button>
+      </div>
+      <div class="pricing-card">
+          <h3>Weekly Rate</h3>
+          <p>Economical option for long-term storage</p>
+          <div class="price">₹900/bag/week</div>
+          <button class="btn primary"><a href="/store">Store Now</a></button>
+      </div>
+  </div>
+ 
+</section>
+
+
+<!-- Contact Us Section -->
+<section id="contact" class="contact">
+    <h2 class="contacts">Contact</h2>
+    <div class="contact-form-map">
+        <div class="contact-form">
+            <h3>Send Us a Message</h3>
+            <form id="contactForm" action="/home" method="POST">
+                <input type="text" placeholder="Your Name" name="name" required>
+                <input type="email" placeholder="Your Email" name="email" required>
+                <textarea placeholder="Your Message" name="message" required></textarea>
+                <button type="submit" class="btn primary">Send Message</button>
+            </form>
+            <script>
+                document.getElementById('getLocationBtn').addEventListener('click', function() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            const lat = position.coords.latitude;
+                            const lng = position.coords.longitude;
+                            document.getElementById('currentLocation').value = lat + ',' + lng; // Set the current location
+                        }, function() {
+                            alert('Unable to retrieve your location.');
+                        });
+                    } else {
+                        alert('Geolocation is not supported by this browser.');
+                    }
+                });
+            </script>
+
+            <div id="messageStatus" style="color: green; font-weight: bold; margin-top: 10px; display: none;">
+                Message sent successfully!
+            </div>
+        </div>
+
+          <!-- Google Map Embed -->
+          <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61306.74805979466!2d81.08951945260434!3d16.185869115523236!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a49e7bb8e2c3e69%3A0x7f88ffaeefbbd4b!2sMachilipatnam%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1736397691053!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+  </div>
+</section>
+
+
+<!-- Additional Information Section -->
+<section class="additional-info">
+  
+  <div class="container">
+    
+          <div class="contact-info">
+              <h2>Contact Us</h2>
+              <p>If you have any questions or inquiries, feel free to reach out to us!</p>
+              <div class="contact-details">
+                  <div class="contact-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <p>Location: <span>Nekarikallu, India</span></p>
+                  </div>
+                  <div class="contact-item">
+                      <i class="fas fa-phone-alt"></i>
+                      <p>Phone: <span>8886451189</span></p>
+                  </div>
+                  <div class="contact-item">
+                      <i class="fas fa-envelope"></i>
+                      <p>Email: <span>mohanasrinivas08@gmail.com</span></p>
+                  </div>
+              </div>
+          </div>
+  
+      <!-- Menu Links -->
+      <div class="menu-links">
+          <h3>Quick Links</h3>
+          <ul>
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#pricing">Pricing</a></li>
+              <li><a href="#contact">Contact</a></li>
+          </ul>
+      </div>
+
+      <!-- Social Media Icons -->
+      <div class="social-media">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+              <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+        
+
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2025 CloakroomPro | All Rights Reserved</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- AI Chat Assistant -->
+    <div class="chat-container">
+        <button class="chat-button" id="chatButton">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div class="chat-modal" id="chatModal">
+            <div class="chat-header">
+                <h3>AI Assistant</h3>
+                <button class="close-chat">&times;</button>
+            </div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input">
+                <input type="text" id="userMessage" placeholder="Type your message...">
+                <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js">
+        
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Simulate form submission success
+            setTimeout(function() {
+                document.getElementById('messageStatus').style.display = 'block';
+            }, 1000); // Simulate a delay for the form submission
+
+            // Optionally, you can send the form data using fetch or XMLHttpRequest
+            // and handle the response to display the green message.
+        });
+        document.getElementById('getLocationBtn').addEventListener('click', function () {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(
+                function (position) {
+                  const lat = position.coords.latitude;
+                  const lng = position.coords.longitude;
+                  document.getElementById('currentLocation').value = lat + ',' + lng;
+                  alert('Location captured: ' + lat + ', ' + lng);
+                },
+                function () {
+                  alert('Unable to retrieve your location.');
+                }
+              );
+            } else {
+              alert('Geolocation is not supported by this browser.');
+            }
+          });
+        
+          document.getElementById('trackDeliveryBtn').addEventListener('click', function () {
+            fetch('/api/track-delivery', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                const deliveryStatus = document.getElementById('deliveryStatus');
+                if (data.status) {
+                  deliveryStatus.textContent = `Delivery Status: ${data.status}`;
+                } else {
+                  deliveryStatus.textContent = 'No delivery in progress.';
+                }
+              })
+              .catch((error) => {
+                console.error('Error tracking delivery:', error);
+              });
+          });
+
+          
+gsap.from(".hero img", { 
+  duration: 2, 
+  opacity: 0, 
+  y: 50 
+});
+gsap.from(".animate-text span", { 
+  duration: 2, 
+  opacity: 0, 
+  y: 30, 
+  delay: 0.5 
+});
+
+// Smooth Scroll Function
+function scrollToSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  window.scrollTo({
+    top: section.offsetTop - 60, // Adjust for fixed navbar height
+    behavior: "smooth"
+  });
+}
+
+
+window.addEventListener("scroll", () => {
+  const navbar = document.querySelector(".navbar");
+  if (window.scrollY > 50) {
+    navbar.classList.add("scrolled");
+  } else {
+    navbar.classList.remove("scrolled");
+  }
+});
+
+console.log("Mobile menu script loaded."); // Debugging line to check if script is loaded
+
+// WebSocket connection
+const socket = new WebSocket('ws://localhost:5002'); // Adjust the URL as needed
+
+socket.addEventListener('open', () => {
+  console.log('Connected to WebSocket server');
+});
+
+socket.addEventListener('message', (event) => {
+  console.log(`Message from server: ${event.data}`);
+  // Handle incoming messages here
+});
+
+// Function to send messages to the WebSocket server
+function sendMessage(message) {
+  if (socket.readyState === WebSocket.OPEN) {
+    socket.send(message);
+  } else {
+    console.error('WebSocket is not open. Unable to send message.');
+  }
+}
+
+
+// Mobile Menu and Active Link Functionality
+
+const mobileMenu = document.querySelector('.mobile-menu');
+const navLinks = document.querySelector('.nav-links');
+const navItems = document.querySelectorAll('.nav-link');
+
+// Toggle mobile menu
+mobileMenu.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
+
+// Close mobile menu when clicking a link
+navItems.forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= 768) {
+      navLinks.classList.remove('active');
+    }
+  });
+});
+
+// Add active class to current section
+window.addEventListener('scroll', () => {
+  const scrollPos = window.scrollY;
+  
+  navItems.forEach(link => {
+    const section = document.querySelector(link.hash);
+    if (section.offsetTop - 60 <= scrollPos && 
+        section.offsetTop - 60 + section.offsetHeight > scrollPos) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+});
+
+// Storage Management System
+let storedItems = [];
+let storageTimer = null;
+
+// Add item storage functionality
+function storeItem(description, quantity, rate, duration) {
+  const item = {
+    description: description,
+    quantity: quantity,
+    rate: rate,
+    duration: duration,
+    checkInTime: new Date(),
+    paymentStatus: 'not done'
+  };
+  
+  storedItems.push(item);
+  startStorageTimer(item);
+  updateStorageStatus();
+  updateStoredItemsDisplay();
+}
+
+// Start storage timer
+function startStorageTimer(item) {
+  const duration = parseDuration(item.duration);
+  storageTimer = setTimeout(() => {
+    showCheckoutModal(item);
+  }, duration);
+}
+
+// Parse duration string to milliseconds
+function parseDuration(duration) {
+  if (duration.includes('hour')) {
+    const hours = parseInt(duration);
+    return hours * 60 * 60 * 1000;
+  } else if (duration.includes('day')) {
+    const days = parseInt(duration);
+    return days * 24 * 60 * 60 * 1000;
+  } else if (duration.includes('week')) {
+    const weeks = parseInt(duration);
+    return weeks * 7 * 24 * 60 * 60 * 1000;
+  }
+}
+
+// Show checkout modal
+function showCheckoutModal(item) {
+  const modal = document.createElement('div');
+  modal.className = 'checkout-modal';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <h3>Checkout Your Items</h3>
+      <p>Item: ${item.description}</p>
+      <p>Quantity: ${item.quantity}</p>
+      <div class="total-cost">
+        <h4>Total Cost:</h4>
+        <p class="cost-amount">${calculateTotalCost(item)}</p>
+      </div>
+      <button id="checkout-btn">Proceed to Payment</button>
+      <button class="close-modal">&times;</button>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // Handle checkout
+  modal.querySelector('#checkout-btn').addEventListener('click', () => {
+    processPayment(item);
+    modal.remove();
+  });
+  
+  // Close modal
+  modal.querySelector('.close-modal').addEventListener('click', () => {
+    modal.remove();
+  });
+}
+
+// Calculate total cost
+function calculateTotalCost(item) {
+  const rate = parseFloat(item.rate.replace(/[^0-9.]/g, ''));
+  const duration = parseDuration(item.duration);
+  const hours = duration / (60 * 60 * 1000);
+  return `₹${(rate * hours).toFixed(2)}`;
+}
+
+// Process payment
+function processPayment(item) {
+  const paymentAmount = calculateTotalCost(item);
+  
+  // Show admin confirmation modal
+  const adminModal = document.createElement('div');
+  adminModal.className = 'admin-modal';
+  adminModal.innerHTML = `
+    <div class="modal-content">
+      <h3>Admin Confirmation Required</h3>
+      <p>Payment of ${paymentAmount} received?</p>
+      <div class="admin-buttons">
+        <button id="confirm-payment">Confirm Payment</button>
+        <button id="cancel-payment">Cancel Payment</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(adminModal);
+  
+  // Handle admin confirmation
+  adminModal.querySelector('#confirm-payment').addEventListener('click', () => {
+    alert(`Payment of ${paymentAmount} confirmed!`);
+    removeStoredItem(item);
+    adminModal.remove();
+    updateStoredItemsDisplay();
+  });
+  
+  // Handle payment cancellation
+  adminModal.querySelector('#cancel-payment').addEventListener('click', () => {
+    alert('Payment cancelled. Please try again.');
+    adminModal.remove();
+  });
+}
+
+function updateStoredItemsDisplay() {
+  // Update check-in section
+  const checkinContainer = document.querySelector('#checkin-section .items-container');
+  checkinContainer.innerHTML = storedItems
+    .filter(item => item.paymentStatus === 'not done')
+    .map((item, index) => `
+      <div class="stored-item-card">
+        <h3>Item ${index + 1}</h3>
+        <p>Description: ${item.description}</p>
+        <p>Quantity: ${item.quantity}</p>
+        <p>Stored Since: ${item.checkInTime.toLocaleString()}</p>
+        <p>Rate: ${item.rate}</p>
+        <p>Duration: ${item.duration}</p>
+        <button class="checkout-btn" data-index="${index}">Checkout</button>
+      </div>
+    `).join('');
+  
+  // Add checkout button handlers
+  document.querySelectorAll('.checkout-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const index = button.dataset.index;
+      showCheckoutModal(storedItems[index]);
+    });
+  });
+  
+  // Update checkout section
+  const checkoutContainer = document.querySelector('#checkout-section .items-container');
+  checkoutContainer.innerHTML = storedItems
+    .filter(item => item.paymentStatus === 'done')
+    .map((item, index) => `
+      <div class="stored-item-card">
+        <h3>Item ${index + 1}</h3>
+        <p>Description: ${item.description}</p>
+        <p>Quantity: ${item.quantity}</p>
+        <p>Stored Since: ${item.checkInTime.toLocaleString()}</p>
+        <p>Rate: ${item.rate}</p>
+        <p>Duration: ${item.duration}</p>
+        <p class="payment-status done">Payment Done</p>
+      </div>
+    `).join('');
+  
+  // Update storage status
+  updateStorageStatus();
+}
+
+// Remove stored item
+function removeStoredItem(item) {
+  storedItems = storedItems.filter(i => i !== item);
+  updateStorageStatus();
+}
+
+// Update storage status display
+function updateStorageStatus() {
+  const statusElement = document.getElementById('storage-status');
+  if (!statusElement) return;
+  
+  if (storedItems.length > 0) {
+    statusElement.innerHTML = `
+      <div class="storage-summary">
+        <p>You have ${storedItems.length} items in storage</p>
+        <button id="view-items">View Items</button>
+      </div>
+    `;
+    
+    // Add click handler for view items
+    statusElement.querySelector('#view-items').addEventListener('click', () => {
+      showStoredItems();
+    });
+  } else {
+    statusElement.innerHTML = 'No items currently in storage';
+  }
+}
+
+function showStoredItems() {
+  const modal = document.createElement('div');
+  modal.className = 'items-modal';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <h3>Stored Items</h3>
+      <div class="items-list">
+        ${storedItems.map((item, index) => `
+          <div class="stored-item">
+            <p><strong>Item ${index + 1}:</strong> ${item.description}</p>
+            <p>Quantity: ${item.quantity}</p>
+            <p>Stored Since: ${item.checkInTime.toLocaleString()}</p>
+            <p>Rate: ${item.rate}</p>
+            <p>Duration: ${item.duration}</p>
+          </div>
+        `).join('')}
+      </div>
+      <button class="close-modal">&times;</button>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // Close modal
+  modal.querySelector('.close-modal').addEventListener('click', () => {
+    modal.remove();
+  });
+}
+
+// Get existing sections from the page
+const checkinSection = document.getElementById('checkin-section');
+const checkoutSection = document.getElementById('checkout-section');
+
+// Add items containers to existing sections
+checkinSection.innerHTML += `
+  <div class="stored-items">
+    <h3>Currently Stored Items</h3>
+    <div class="items-container"></div>
+  </div>
+`;
+
+checkoutSection.innerHTML += `
+  <div class="stored-items">
+    <h3>Completed Checkouts</h3>
+    <div class="items-container"></div>
+  </div>
+`;
+
+// Add storage status to UI
+const statusElement = document.createElement('div');
+statusElement.id = 'storage-status';
+statusElement.style.position = 'fixed';
+statusElement.style.bottom = '20px';
+statusElement.style.right = '20px';
+statusElement.style.padding = '10px 20px';
+statusElement.style.backgroundColor = '#0078d4';
+statusElement.style.color = 'white';
+statusElement.style.borderRadius = '5px';
+document.body.appendChild(statusElement);
+updateStorageStatus();
+updateStoredItemsDisplay();
+
+// Add modal styles
+const style = document.createElement('style');
+style.textContent = `
+  .storage-modal, .checkout-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    position: relative;
+  }
+  
+  .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  #storage-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  #storage-form button, #checkout-btn {
+    width: 100%;
+    padding: 10px;
+    background: #0078d4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+`;
+document.head.appendChild(style);
+
+function handleCheckIn() {
+  const description = prompt("Enter item description:");
+  const quantity = parseInt(prompt("Enter quantity:"));
+  const rate = prompt("Enter storage rate (e.g., ₹20/hour):");
+  const duration = prompt("Enter duration (e.g., 1 hour):");
+  storeItem(description, quantity, rate, duration);
+}
+
+function handleCheckOut() {
+  const itemIndex = parseInt(prompt("Enter the index of the item to check out:")) - 1;
+  if (storedItems[itemIndex]) {
+    showCheckoutModal(storedItems[itemIndex]);
+  } else {
+    alert("Invalid item index.");
+  }
+}
+
+function handleStoreNow() {
+  const description = prompt("Enter item description:");
+  const quantity = parseInt(prompt("Enter quantity:"));
+  const rate = prompt("Enter storage rate (e.g., ₹20/hour):");
+  const duration = prompt("Enter duration (e.g., 1 hour):");
+  storeItem(description, quantity, rate, duration);
+  updateStoredItemsDisplay();
+}
+
+// Populate the Stored Items section dynamically
+function populateStoredItems() {
+  const container = document.getElementById('stored-items-container');
+  if (storedItems.length === 0) {
+    container.innerHTML = "<p>No items currently stored.</p>";
+  } else {
+    container.innerHTML = storedItems
+      .map(
+        (item, index) => `
+        <div class="stored-item-card">
+          <h3>Item ${index + 1}</h3>
+          <p>Description: ${item.description}</p>
+          <p>Quantity: ${item.quantity}</p>
+          <p>Rate: ${item.rate}</p>
+          <p>Duration: ${item.duration}</p>
+          <button onclick="handleCheckOut(${index})">Check Out</button>
+          <button onclick="removeStoredItem(${index})">Remove</button>
+        </div>
+      `
+      )
+      .join('');
+  }
+}
+
+// Call the function to populate the Stored Items section
+populateStoredItems();
+
+// Chat Assistant Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const chatButton = document.getElementById('chatButton');
+  const chatModal = document.getElementById('chatModal');
+  const chatMessages = document.getElementById('chatMessages');
+  const userMessageInput = document.getElementById('userMessage');
+  const sendMessageButton = document.getElementById('sendMessage');
+  const closeChatButton = document.querySelector('.close-chat');
+
+  // Toggle chat modal
+  if (chatButton && chatModal) {
+      chatButton.addEventListener('click', function() {
+          if (chatModal.style.display === 'flex') {
+              // Slide out animation
+              chatModal.style.animation = 'slideOut 0.3s forwards';
+              setTimeout(() => {
+                  chatModal.style.display = 'none';
+              }, 300);
+          } else {
+              // Slide in animation
+              chatModal.style.display = 'flex';
+              chatModal.style.animation = 'slideIn 0.3s forwards';
+              
+              // Add welcome message if chat is empty
+              if (chatMessages.children.length === 0) {
+                  setTimeout(() => {
+                      addMessageToChat("Hello! I'm your Cloakroom Assistant. How can I help you today?", 'bot');
+                  }, 500);
+              }
+          }
+      });
+  }
+
+  // Close chat modal
+  if (closeChatButton) {
+      closeChatButton.addEventListener('click', function() {
+          chatModal.style.animation = 'slideOut 0.3s forwards';
+          setTimeout(() => {
+              chatModal.style.display = 'none';
+          }, 300);
+      });
+  }
+
+  // Add message to chat
+  function addMessageToChat(message, sender) {
+      const messageElement = document.createElement('div');
+      messageElement.className = `message ${sender}`;
+      messageElement.innerHTML = `
+          <div class="message-content">${message}</div>
+          <div class="message-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+      `;
+      if (chatMessages) {
+          chatMessages.appendChild(messageElement);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+  }
+
+  // Show typing indicator
+  function showTypingIndicator() {
+      const typingElement = document.createElement('div');
+      typingElement.className = 'message bot typing';
+      typingElement.id = 'typing-indicator';
+      typingElement.innerHTML = `
+          <div class="message-content">
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+          </div>
+      `;
+      if (chatMessages) {
+          chatMessages.appendChild(typingElement);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+  }
+
+  // Remove typing indicator
+  function removeTypingIndicator() {
+      const typingElement = document.getElementById('typing-indicator');
+      if (typingElement) {
+          typingElement.remove();
+      }
+  }
+
+  // Generate bot response
+  function generateBotResponse(userMessage) {
+      const lowerMessage = userMessage.toLowerCase();
+      
+      if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+          return "Hello! How can I help you with your cloakroom needs today?";
+      } else if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
+          return "Our pricing starts at ₹20 per bag per hour. We also offer daily (₹150/bag) and weekly (₹900/bag) rates.";
+      } else if (lowerMessage.includes('store') || lowerMessage.includes('check-in')) {
+          return "You can check-in your items by clicking the 'Check-In Now' button in the Luggage Services section.";
+      } else if (lowerMessage.includes('retrieve') || lowerMessage.includes('check-out')) {
+          return "To retrieve your items, click the 'Check-Out Now' button and present your QR code.";
+      } else if (lowerMessage.includes('security')) {
+          return "All items are stored in individual lockers with 24/7 monitoring for maximum security.";
+      } else if (lowerMessage.includes('contact') || lowerMessage.includes('help')) {
+          return "You can contact us at 8886451189 or email mohanasrinivas08@gmail.com";
+      } else if (lowerMessage.includes('thank')) {
+          return "You're welcome! Let me know if you need any further assistance.";
+      } else {
+          return "I'm here to help with your cloakroom needs. You can ask about pricing, storage, or retrieval.";
+      }
+  }
+
+  // Send message function
+  function sendChatMessage() {
+      const message = userMessageInput.value.trim();
+      if (message && chatMessages) {
+          addMessageToChat(message, 'user');
+          userMessageInput.value = '';
+          
+          showTypingIndicator();
+          
+          setTimeout(() => {
+              removeTypingIndicator();
+              const botResponse = generateBotResponse(message);
+              addMessageToChat(botResponse, 'bot');
+          }, 1000 + Math.random() * 2000);
+      }
+  }
+
+  // Event listeners for sending messages
+  if (sendMessageButton && userMessageInput) {
+      sendMessageButton.addEventListener('click', sendChatMessage);
+      userMessageInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+              sendChatMessage();
+          }
+      });
+  }
+});
+
+// Add this animation CSS
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+  }
+`;
+document.head.appendChild(style);
+
+    </script>
+</body>
+</html>

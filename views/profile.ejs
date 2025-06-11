@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function validateForm() {
+            const aadhar = document.getElementById('aadhar').value;
+            const age = document.getElementById('age').value;
+            const aadharRegex = /^\d{12}$/; 
+
+            if (!aadharRegex.test(aadhar)) {
+                alert('Aadhar number must be 12 digits.');
+                return false;
+            }
+
+            if (age < 0 || age > 120) {
+                alert('Please enter a valid age.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a href="#" class="navbar-brand">CloakroomPro</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a href="/home" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="/home#features" class="nav-link">Features</a></li>
+                        <li class="nav-item"><a href="/home#about" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="/home#contact" class="nav-link">Contact</a></li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a href="/profile" class="dropdown-item">Profile</a>
+                                <a href="/logout" class="dropdown-item">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <section id="profile" class="card p-4">
+            <h2 class="card-title">Welcome, <%= user.name %></h2>
+            <p class="card-text"><strong>Email:</strong> <%= user.email %></p>
+
+            <!-- Phone Number Verification Section -->
+            <% if (user.phoneVerified) { %>
+                <p class="card-text"><strong>Phone Number:</strong> <%= user.phoneNumber %> <span class="badge badge-success">Verified</span></p>
+            <% } else { %>
+                <p class="card-text"><strong>Phone Number:</strong> <%= user.phoneNumber || 'Not provided' %></p>
+                <form action="/send-otp" method="POST" class="mb-3">
+                    <div class="form-group">
+                        <label for="phoneNumber">Enter Phone Number:</label>
+                        <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" value="<%= user.phoneNumber || '' %>" required>
+                    </div> 
+                </form>
+            <% } %>
+
+            <!-- Profile Update Form -->
+<form action="/profile/update-profile" method="POST" onsubmit="return validateForm()">
+
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" class="form-control" value="<%= user.age || '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth:</label>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control" value="<%= user.dateOfBirth ? user.dateOfBirth.toISOString().split('T')[0] : '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="aadhar">Aadhar Number:</label>
+                    <input type="text" id="aadhar" name="aadhar" class="form-control" value="<%= user.aadhar || '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control" value="<%= user.email || '' %>" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2025 CloakroomPro | All Rights Reserved</p>
+    </footer>
+
+    <!-- Bootstrap JS and Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
