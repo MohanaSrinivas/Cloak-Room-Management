@@ -112,7 +112,7 @@ app.use('/admin', adminRoutes);
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('Cloak Room Management App is running!');
+  res.render('signup', { name: '', email: '', message: '' });
 });
 
 app.get('/signup', (req, res) => {
