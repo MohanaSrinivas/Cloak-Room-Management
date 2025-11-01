@@ -100,7 +100,7 @@ const checkAuth = (req, res, next) => {
   }
 };
 
-const profileRoutes = require('./Routes/profileRoutes');
+const profileRoutes = require('./routes/profileRoutes');
 const deliveryRoutes = require('./routes/deliveryRoutes');
 const storeRoutes = require('./store');
 const adminRoutes = require('./routes/adminRoutes');
