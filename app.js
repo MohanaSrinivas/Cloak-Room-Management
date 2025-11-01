@@ -111,6 +111,10 @@ app.use('/api/store', storeRoutes);
 app.use('/admin', adminRoutes);
 
 // Routes
+app.get('/', (req, res) => {
+  res.redirect('/login');
+});
+
 app.get('/signup', (req, res) => {
   res.render('signup', { name: '', email: '', message: '' });
 });
